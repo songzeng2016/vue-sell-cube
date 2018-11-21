@@ -6,8 +6,7 @@
       v-model="selectedLabel"
       :data="tabs"
       ref="tabBar"
-      class="border-bottom-1px"
-    >
+      class="border-bottom-1px">
     </cube-tab-bar>
     <div class="slide-wrapper">
       <cube-slide
@@ -15,20 +14,13 @@
         :auto-play=false
         :show-dots=false
         :initial-index="index"
-        ref="slide"
-        >
-        <cube-slide-item>
-          goods1
+        :options="slideOptions"
+        @change="onChange"
+        @scroll="onScroll"
+        ref="slide">
+        <cube-slide-item v-for="(tab, index) in tabs" :key="index">
+          <component ref="component" :is="tab.component" :data="tab.data"></component>
         </cube-slide-item>
-        <cube-slide-item>
-          goods2
-        </cube-slide-item>
-        <cube-slide-item>
-          goods3
-        </cube-slide-item>
-        <!--<cube-slide-item v-for="(tab,index) in tabs" :key="index">-->
-          <!--<component ref="component" :is="tab.component" :data="tab.data"></component>-->
-        <!--</cube-slide-item>-->
       </cube-slide>
     </div>
   </div>
@@ -37,20 +29,26 @@
 <script>
   export default {
     name: 'tab',
+    props: {
+      tabs: {
+        type: Array,
+        default() {
+          return []
+        }
+      },
+      initialIndex: {
+        type: Number,
+        default: 0,
+      }
+    },
     data() {
       return {
-        index: 0,
-        tabs: [
-          {
-            label: 'seller1',
-          },
-          {
-            label: 'seller2',
-          },
-          {
-            label: 'seller3',
-          },
-        ]
+        index: this.initialIndex,
+        slideOptions: {
+          listenScroll: true,
+          probeType: 3,
+          directionLockThreshold: 0,
+        }
       }
     },
     computed: {
@@ -66,7 +64,7 @@
       }
     },
     mounted() {
-      // this.onChange(this.index)
+      this.onChange(this.index)
     },
     methods: {
       onScroll(pos) {
