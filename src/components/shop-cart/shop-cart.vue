@@ -126,7 +126,7 @@
           }
           this.listFold = false
           this._showShopCartList()
-          this._showShopCartSticky()
+          // this._showShopCartSticky()
         } else {
           this.listFold = true
           this._hideShopCartList()
@@ -184,13 +184,13 @@
           },
           $events: {
             leave: () => {
-              this._hideShopCartSticky()
+              // this._hideShopCartSticky()
             },
             hide: () => {
               this.listFold = true
             },
             add: (el) => {
-              this.shopCartStickyComp.drop(el)
+              // this.shopCartStickyComp.drop(el)
             }
           }
         })
@@ -209,8 +209,10 @@
         this.shopCartStickyComp.show()
       },
       _hideShopCartList() {
-        const list = this.sticky ? this.$parent.list : this.shopCartListComp
-        list.hide && list.hide()
+        // const list = this.sticky ? this.$parent.list : this.shopCartListComp
+        // list.hide && list.hide()
+
+        this.shopCartListComp.hide()
       },
       _hideShopCartSticky() {
         this.shopCartStickyComp.hide()
